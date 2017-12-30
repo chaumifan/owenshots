@@ -14,4 +14,6 @@ async def on_message(message):
     if message.content.startswith('$hello'):
         await client.send_message(message.channel, content = "Hello!")
 
-client.run('INSERT TOKEN HERE')
+with open("token", "r") as f:
+    token = f.readline()
+client.run(token[:-1])

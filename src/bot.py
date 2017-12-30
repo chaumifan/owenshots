@@ -27,6 +27,17 @@ async def on_message(message):
 #        await bot.say("found entry")
     if message.content == ("!8ballchau"):
         await bot.say("8 ball summoned")
+    if message.content == "!stupid":
+        await bot.say("it worked")
+    if message.content == ("!no"):
+        await bot.say("nooooo")
+
+    await bot.process_commands(message)
+
+@bot.command(pass_context=True)
+async def foo(ctx):
+    #    await bot.say("foo!")
+    await ctx.send("foo!")
 
 @bot.command()
 async def repeat(times : int, content="repeating..."):
@@ -61,4 +72,6 @@ phrase = ["do your homework",
         "ruin someone's player experience"]
 img_dict = create_dict
 
-bot.run('INSERT TOKEN HERE')
+with open("token", "r") as f:
+    token = f.readline()
+bot.run(token[:-1])
