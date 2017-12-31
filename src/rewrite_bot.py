@@ -25,16 +25,16 @@ async def on_message(message):
     if message.content[0] == "!":
         cmd = message.content[1:]
         if cmd in img_dict:
-            await channel.send("found entry")
             await channel.send(img_dict[cmd])
         if message.content == ("!8ballchau"):
-            await channel.send("8 ball summoned")
+            await channel.send(random.choice(phrase))
 
     await bot.process_commands(message)
 
-@bot.command()
-async def foo(ctx):
-    await ctx.send("foo!")
+@bot.command(description="Description of test")
+async def echo(ctx, *args):
+    """Testing function"""
+    await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
 
 @bot.command()
 async def repeat(ctx, times : int, content="repeating..."):
@@ -45,18 +45,26 @@ async def repeat(ctx, times : int, content="repeating..."):
 async def eightballchau(ctx):
     await ctx.send(random.choice(phrase))
 
-@bot.command(description="Description of test")
-async def echo(ctx, *args):
-    """Testing function"""
-    await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
-
 @bot.command()
 async def kek(ctx):
-    await ctx.send(lel)
+    await ctx.send(lol)
 
 @bot.command()
 async def wagecuckalarm(ctx):
-    await ctx.send("WEE WOO WEE WOO")
+    alarm_emoji = u'\u23F0'
+    await ctx.send(alarm_emoji + "WEE WOO WEE WOO" + alarm_emoji)
+    await ctx.send(alarm_emoji + "WAGE CUCKS GO TO SLEEP" + alarm_emoji)
+    await ctx.send(alarm_emoji + "WEE WOO WEE WOO" + alarm_emoji)
+
+@bot.command()
+async def repost(ctx):
+    policecar_emoji = u'\U0001F693'
+    await ctx.send(policecar_emoji + 
+            "repost alert repost alert weewooweewooweewoo" +
+            policecar_emoji)
+    await ctx.send(policecar_emoji +
+            "put the memes down and step away from the computer" +
+            policecar_emoji)
 
 @bot.command()
 async def addimg(ctx, cmd, img):
@@ -66,11 +74,13 @@ async def addimg(ctx, cmd, img):
 
 ### REMOVED COMMANDS ###
 
-lel = u'\u314b\u314b\u314b'
+lol = u'\u314b\u314b\u314b'
 phrase = ["do your homework", 
         "cs?", 
         "take a hit?",
-        "ruin someone's player experience"]
+        "ruin someone's player experience",
+        "draw two cards"]
+cmd_list = [""]
 img_dict = create_dict()
 
 with open("token", "r") as f:
