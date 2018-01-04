@@ -1,4 +1,5 @@
 import random
+import json
 from discord.ext import commands
 
 
@@ -12,6 +13,7 @@ def create_dict():
             img_dict[key] = val
     return img_dict
 
+
 @bot.event
 async def on_ready():
     print("Logged in as")
@@ -21,11 +23,14 @@ async def on_ready():
 
 #async def alarm(self):
 #    await self.wait_until_read()
-#    channel = client.get_channel(326608470923149316)
+#    channel = client.get_channel()
 
 
 @bot.event
 async def on_message(message):
+    if message.author == bot.user:
+        return
+
     channel = message.channel
     if message.content[0] == "!":
         cmd = message.content[1:]
@@ -41,6 +46,9 @@ async def on_message(message):
                     await channel.send(heart_emoji)
                 else:
                     await channel.send("fuck you")
+
+    if message.content == ("bet"):
+        await channel.send("bet")
 
     await bot.process_commands(message)
 
@@ -98,28 +106,20 @@ async def favorite(ctx, mention):
 
 ### REMOVED COMMANDS ###
 
-lol = u'\u314b\u314b\u314b'
-phrase = ["do your homework", 
-        "cs?", 
-        "take a hit?",
-        "ruin someone's player experience",
-        "draw two cards"]
-cmd_list = [""]
 img_dict = create_dict()
-
-owen_id = 99359318305943552
-owenbot_id = 395883514056146944
-
-# Emojis
-heart_emoji = u'\u2764'
-alarm_emoji = u'\u23F0'
-policecar_emoji = u'\U0001F693'
 
 cur_fav = 0
 
-with open("token", "r") as f:
-    token = f.readline()
+data = json.load(open("info.json"))
+token = data["token"]
+phrase = data["phrase"]
+owen_id = int(data["id"]["owen_id"])
+owenbot_id = int(data["id"]["owenbot_id"])
+general_ch_id = int(data["channel"]["general"])
 
-bot.run(token[:-1])
-#channel = client.get_channel(326608470923149316)
-#await channel.send('test')
+heart_emoji = data["unicode"]["emoji"]["heart_emoji"]
+alarm_emoji = data["unicode"]["emoji"]["alarm_emoji"]
+policecar_emoji = data["unicode"]["emoji"]["policecar_emoji"]
+lol = data["unicode"]["kek"]
+
+bot.run(token)

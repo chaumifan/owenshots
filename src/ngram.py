@@ -1,4 +1,5 @@
 import sys
+import os
 import math
 import random
 from nltk import ngrams
@@ -19,8 +20,9 @@ def weighted_choice(choices):
         upto += w
 
 source = "../input/"
-for i in range(len(source)):
-    text = open(source + NUM + "html").read().split()
+
+for filename in os.listdir(directory):
+    text = open(filename).read().split()
 
     n_grams = ngrams(text, n)
     for gram in n_grams:
@@ -29,7 +31,7 @@ for i in range(len(source)):
         else:
             counts[gram] = 1
 
-for i in range(100):
+for i in range(30):
     sys.stdout.write(word + " ")
     choices = {k:v for k,v in counts.items() if k[0] == word}
     word = weighted_choice(choices)[1]
