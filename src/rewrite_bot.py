@@ -1,4 +1,5 @@
 import random
+import ngram
 import json
 from discord.ext import commands
 
@@ -104,9 +105,15 @@ async def favorite(ctx, mention):
     else:
         await ctx.send("fuck you only owen gets to favorite")
 
+@bot.command()
+async def mimic(ctx, word):
+    sentence = ngram.ngram(counts, word)
+    await ctx.send(sentence)
+
 ### REMOVED COMMANDS ###
 
 img_dict = create_dict()
+counts = ngram.ngram_init()
 
 cur_fav = 0
 
@@ -121,5 +128,6 @@ heart_emoji = data["unicode"]["emoji"]["heart_emoji"]
 alarm_emoji = data["unicode"]["emoji"]["alarm_emoji"]
 policecar_emoji = data["unicode"]["emoji"]["policecar_emoji"]
 lol = data["unicode"]["kek"]
+
 
 bot.run(token)
