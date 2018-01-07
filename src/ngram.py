@@ -19,30 +19,26 @@ def ngram_init():
     counts = {}
     
     directory = "../input/"
-    filename = "../input/test.txt"
-    text = open(filename).read().split()
+    for filename in os.listdir(directory):
+        filename = os.path.join(directory, filename)
+        text = open(filename).read().split()
     
-    n_grams = ngrams(text, n)
-    for gram in n_grams:
-        if gram in counts:
-            counts[gram] += 1
-        else:
-            counts[gram] = 1
-    return counts
-    
-    #for filename in os.listdir(directory):
-    #    text = open(filename).read().split()
-    #
-    #    n_grams = ngrams(text, n)
-    #    for gram in n_grams:
-    #        if gram in counts:
-    #            counts[gram] += 1
-    #        else:
-    #            counts[gram] = 1
+        n_grams = ngrams(text, n)
+        for gram in n_grams:
+            if gram in counts:
+                counts[gram] += 1
+            else:
+                counts[gram] = 1
 
-def ngram(counts, word):
+    return counts
+
+
+def ngram(counts, word, num_words):
+    if num_words <= 0:
+        num_words = random.randint(5,15)
+
     result = ""
-    for i in range(random.randint(5,15)):
+    for i in range(num_words):
         result = result + " " + word
         choices = {k:v for k,v in counts.items() if k[0] == word}
         word = weighted_choice(choices)[1]

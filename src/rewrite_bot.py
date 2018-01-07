@@ -106,8 +106,8 @@ async def favorite(ctx, mention):
         await ctx.send("fuck you only owen gets to favorite")
 
 @bot.command()
-async def mimic(ctx, word):
-    sentence = ngram.ngram(counts, word)
+async def mimic(ctx, word, num_words=0):
+    sentence = ngram.ngram(counts, word, num_words)
     await ctx.send(sentence)
 
 ### REMOVED COMMANDS ###
