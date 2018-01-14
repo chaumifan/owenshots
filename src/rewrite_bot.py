@@ -93,14 +93,23 @@ async def repost(ctx):
 
 @bot.command()
 async def addimg(ctx, name, image_link):
-    """Adds an image as a command. Call the image using !<name>"""
+    """Adds an image as a command."""
     with open("image.info", "a") as f:
         f.write(name + " " + image_link)
     img_dict[name] = image_link
 
 @bot.command()
+async def listimg(ctx):
+    """Lists images. Call using !<name>"""
+    s = ""
+    for key in img_dict:
+        s = s + key + ", "
+    s = s[:-2]
+    await ctx.send(s)
+
+@bot.command()
 async def favorite(ctx, mention):
-    """Allows Owen to choose his current favorite by mentioning them."""
+    """Allows Owen to choose his current favorite."""
     if ctx.message.author.id == owen_id:
         if len(ctx.message.mentions) > 1:
             await ctx.send("fuck you only one favorite allowed")
@@ -114,7 +123,7 @@ async def favorite(ctx, mention):
 @bot.command(description=
         "Uses ngram library with data scraped from Facebook and Discord")
 async def mimic(ctx, word, num_words=0):
-    """Mimics Owen."""
+    """Mimics Owen given a starting word."""
     sentence = ngram.ngram(counts, word, num_words)
     await ctx.send(sentence)
 
