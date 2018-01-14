@@ -59,32 +59,31 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
-@bot.command(description="Description of test")
+@bot.command(description="Description of echo")
 async def echo(ctx, *args):
-    """Testing function"""
+    """Bot will repeat anything said."""
     await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
 
 @bot.command()
-async def repeat(ctx, times : int, content="repeating..."):
-    for i in range(times):
-        await ctx.send(content)
-
-@bot.command()
 async def eightballchau(ctx):
+    """Call upon eight ball Chau. Can also use !8ballchau."""
     await ctx.send(random.choice(phrase))
 
 @bot.command()
 async def kek(ctx):
+    """Sends kekeke in Korean characters."""
     await ctx.send(lol)
 
 @bot.command()
 async def wagecuckalarm(ctx):
+    """Notifies wage cucks to go to sleep."""
     await ctx.send(alarm_emoji + "WEE WOO WEE WOO" + alarm_emoji)
     await ctx.send(alarm_emoji + "WAGE CUCKS GO TO SLEEP" + alarm_emoji)
     await ctx.send(alarm_emoji + "WEE WOO WEE WOO" + alarm_emoji)
 
 @bot.command()
 async def repost(ctx):
+    """Alerts others when something is reposted."""
     await ctx.send(policecar_emoji + 
             "repost alert repost alert weewooweewooweewoo" +
             policecar_emoji)
@@ -93,13 +92,15 @@ async def repost(ctx):
             policecar_emoji)
 
 @bot.command()
-async def addimg(ctx, cmd, img):
+async def addimg(ctx, name, image_link):
+    """Adds an image as a command. Call the image using !<name>"""
     with open("image.info", "a") as f:
-        f.write(cmd + " " + img)
-    img_dict[cmd] = img
+        f.write(name + " " + image_link)
+    img_dict[name] = image_link
 
 @bot.command()
 async def favorite(ctx, mention):
+    """Allows Owen to choose his current favorite by mentioning them."""
     if ctx.message.author.id == owen_id:
         if len(ctx.message.mentions) > 1:
             await ctx.send("fuck you only one favorite allowed")
@@ -110,13 +111,16 @@ async def favorite(ctx, mention):
     else:
         await ctx.send("fuck you only owen gets to favorite")
 
-@bot.command()
+@bot.command(description=
+        "Uses ngram library with data scraped from Facebook and Discord")
 async def mimic(ctx, word, num_words=0):
+    """Mimics Owen."""
     sentence = ngram.ngram(counts, word, num_words)
     await ctx.send(sentence)
 
 @bot.command()
 async def spoiler(ctx, *, text: str):
+    """Creates a mouseover gif of the spoiler text."""
     # Source: 
     # https://github.com/flapjax/FlapJack-Cogs/blob/master/spoiler/spoiler.py
     temp_filepath = "spoiler/"
